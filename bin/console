@@ -10,5 +10,5 @@ require "load_data_infile2"
 # require "pry"
 # Pry.start
 
-require "irb"
-IRB.start
+require "pry"
+Pry.start
