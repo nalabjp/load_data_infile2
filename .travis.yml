@@ -1,5 +1,21 @@
-sudo: false
+dist: trusty
+sudo: required
 language: ruby
 rvm:
-  - 2.3.1
-before_install: gem install bundler -v 1.12.3
+- 2.2.5
+- 2.3.1
+before_install: gem install bundler
+cache:
+- bundler
+- apt
+addons:
+  apt:
+    packages:
+    - mysql-server-5.6
+    - mysql-client-core-5.6
+    - mysql-client-5.6
+  code_climate:
+    repo_token: a8b76c6c9740d0f664cf714144dc93d3a2c415d205a9a9f33b41d6a146ac7a26
+notifications:
+  slack:
+    secure: IR+RpuGQZDcMYUODakC7fTlT78KkLUe3sxc7c3GY/SUxiHruG0AreIH6KvlVsfR5QH9gGERpAropUjt6Y38GtMKnmRItedbHlaMVNY35cRHt3LsNGh36AmzV/cEqWlFbWLWdZm6iLyAC1KfDomLijsC3cV04oIq3N2ljaxp0iIzK3UEd8EG/XR99s/F4mzUhCF1fm+pAcaW8EyXZaNJQmHykJsBGUPcpGOPDZ76shKHNXupWFxG0vgDApsTe9uBAUshpUoXLGDsPrkOsXZiLvL0px5ckbC8tJasqgBdGpKWq0J5hx+BjuY/ECAnpdG8Sru/pRx+oDgb81lz8UCSUyRXq7zm8RoJqK9u4hhGRuaMR9sgoE6Lfi6IWzzfIUheHs+rC8XalDmllv+l6+jbHTz43ccllE2lnl7oF/VZ4YiSJkCPkUp37mSfIktB+7YMo1wu9QuyhLdcdAy2y73pkMamNPQms5sOYTm97iV0WmdTGUrRsoUnC+b49i6mJhJgsmdAquSjVMlu7fmfiahDAh5jEU+Te2i8SNkDNu+KNmRuRIJacx/tGd8CR9E659FaDCTlHIbO26jvIBlChtaXQh3U/QCFm6lU3JkuM6zLvklEIL3PzPZJzKegDHtiiVB4NyyVqSc0aU2FW6X5GNldc0wFWLe9SMO4CPIoMyG3jpL8=
