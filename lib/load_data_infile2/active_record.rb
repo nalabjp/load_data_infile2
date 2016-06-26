@@ -4,7 +4,11 @@ module LoadDataInfile2
   class ActiveRecord
     def initialize(ar_subclass, options = {})
       @ar_class = ar_subclass
-      options[:local_infile] = !!ar_class.connection_config[:local_infile] unless options.has_key?(:local_infile)
+      if options[:local_infile]
+        raise "Require option as `local_infile: true` in config/database.yml" unless ar_class.connection.instance_variable_get(:@connection).query_options[:local_infile]
+      else
+        options[:local_infile] = !!ar_class.connection_config[:local_infile]
+      end
       options[:charset] = ar_class.connection_config[:charset] unless options.has_key?(:charset)
       @load_data_infile_options = LoadDataInfile2.default_import_options.merge(options)
     end
