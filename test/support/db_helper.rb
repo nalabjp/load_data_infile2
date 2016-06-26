@@ -2,16 +2,6 @@ class DbHelper
   MYSQL_CMD = "MYSQL_PWD=#{DbConfig[:password]} mysql -u #{DbConfig[:username]}"
 
   class << self
-    def restore_database
-      sql = File.expand_path('../../sql/database.sql', __FILE__)
-      run(sql)
-    end
-
-    def restore_tables
-      sql = File.expand_path('../../sql/tables.sql', __FILE__)
-      run(sql)
-    end
-
     def truncate(table)
       sql = "TRUNCATE TABLE `#{table}`"
       query(sql)

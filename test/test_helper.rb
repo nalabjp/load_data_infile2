@@ -15,9 +15,6 @@ end
 
 Dir[File.join(File.dirname(__FILE__), 'support/**/**.rb')].each {|f| require f }
 
-DbHelper.restore_database
-DbHelper.restore_tables
-
 require 'rails'
 require 'active_record'
 require 'active_record/railtie'
