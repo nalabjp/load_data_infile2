@@ -35,7 +35,7 @@ class LoadDataInfile2::ClientTest < Test::Unit::TestCase
 
   sub_test_case '#import' do
     setup do
-      @client = LoadDataInfile2::Client.new(@db_config, { local: true })
+      @client = LoadDataInfile2::Client.new(@db_config, { local_infile: true })
     end
 
     teardown do
