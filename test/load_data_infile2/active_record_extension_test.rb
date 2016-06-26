@@ -2,7 +2,7 @@ require 'test_helper'
 
 class User < ActiveRecord::Base
   def self.default_load_data_infile_options
-    { foo: :override, local_infile: true }
+    { foo: :override, local: true }
   end
 end
 

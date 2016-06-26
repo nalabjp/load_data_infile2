@@ -35,7 +35,7 @@ class LoadDataInfile2::ActiveRecordTest < Test::Unit::TestCase
 
   sub_test_case '#import' do
     setup do
-      @client = LoadDataInfile2::ActiveRecord.new(User, { local_infile: true })
+      @client = LoadDataInfile2::ActiveRecord.new(User, { local: true })
     end
 
     teardown do
