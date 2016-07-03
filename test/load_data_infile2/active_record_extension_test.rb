@@ -1,10 +1,6 @@
 require 'test_helper'
 
-class User < ActiveRecord::Base
-  def self.default_load_data_infile_options
-    { foo: :override }
-  end
-end
+User.default_load_data_infile_options = { foo: :override }
 
 class LoadDataInfile2::ActiveRecordExtensionTest < Test::Unit::TestCase
   test 'ActiveRecord::Base has extension methods' do
