@@ -6,8 +6,6 @@ module LoadDataInfile2
       @ar_class = ar_subclass
       if options[:local_infile]
         raise "Require option as `local_infile: true` in config/database.yml" unless ar_class.connection.instance_variable_get(:@connection).query_options[:local_infile]
-      else
-        options[:local_infile] = !!ar_class.connection_config[:local_infile]
       end
 
       @load_data_infile_options = LoadDataInfile2.default_import_options.merge(options)
