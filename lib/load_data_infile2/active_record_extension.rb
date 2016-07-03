@@ -6,7 +6,7 @@ module LoadDataInfile2
       LoadDataInfile2::ActiveRecord.new(self, default_load_data_infile_options).import(file, options)
     end
 
-    def default_load_data_infile_options
+    cattr_accessor :default_load_data_infile_options do
       {}
     end
   end
