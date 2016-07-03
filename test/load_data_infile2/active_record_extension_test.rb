@@ -10,6 +10,7 @@ class LoadDataInfile2::ActiveRecordExtensionTest < Test::Unit::TestCase
 
   test 'Should called LoadDataInfile2::ActiveRecord#import' do
     any_instance_of(LoadDataInfile2::ActiveRecord) do |klass|
+      mock(klass).initialize.with(User, { foo: :override })
       mock(klass).import.with('/path/to/csv', { key1: :value1 })
       User.load_data_infile('/path/to/csv', { key1: :value1 })
     end

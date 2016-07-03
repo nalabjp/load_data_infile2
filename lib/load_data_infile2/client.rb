@@ -11,8 +11,8 @@ module LoadDataInfile2
       end
       super(config)
 
-      options[:charset] = query_options[:charset] unless options.has_key?(:charset)
       @load_data_infile_options = LoadDataInfile2.default_import_options.merge(options)
+      @load_data_infile_options[:charset] = query_options[:charset] unless options.has_key?(:charset)
     end
 
     def import(file, options = {})

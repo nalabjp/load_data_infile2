@@ -9,8 +9,9 @@ module LoadDataInfile2
       else
         options[:local_infile] = !!ar_class.connection_config[:local_infile]
       end
-      options[:charset] = ar_class.connection_config[:charset] unless options.has_key?(:charset)
+
       @load_data_infile_options = LoadDataInfile2.default_import_options.merge(options)
+      @load_data_infile_options[:charset] = ar_class.connection_config[:charset] unless options.has_key?(:charset)
     end
 
     def import(file, options = {})
