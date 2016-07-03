@@ -7,3 +7,4 @@ test:
   password:
   pool: 5
   timeout: 5000
+  local_infile: true
