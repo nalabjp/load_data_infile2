@@ -17,10 +17,21 @@ class LoadDataInfile2::ClientTest < Test::Unit::TestCase
         assert_true subject.load_data_infile_options[:local_infile]
       end
 
-      test 'Options does not have key named `:local_infile`' do
-        @options = {}
-        assert_false subject.query_options.has_key?(:local_infile)
-        assert_false subject.load_data_infile_options.has_key?(:local_infile)
+      sub_test_case 'removed :local_infile in @db_config' do
+        setup do
+          @old_db_config = @db_config
+          @db_config = DbConfig.to_hash(local_infile: false)
+        end
+
+        teardown do
+          @db_config = @old_db_config
+        end
+
+        test 'Options does not have key named `:local_infile`' do
+          @options = {}
+          assert_false subject.query_options.has_key?(:local_infile)
+          assert_false subject.load_data_infile_options.has_key?(:local_infile)
+        end
       end
     end
 

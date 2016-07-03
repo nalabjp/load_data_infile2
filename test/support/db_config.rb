@@ -1,9 +1,9 @@
-require 'yaml'
-
 class DbConfig
   class << self
-    def to_hash
-      config
+    def to_hash(local_infile: true)
+      dup = Marshal.load(Marshal.dump(config))
+      dup.delete('local_infile') unless local_infile
+      dup
     end
 
     def [](key)
