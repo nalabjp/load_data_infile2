@@ -14,9 +14,7 @@ class LoadDataInfile2::ActiveRecordTest < Test::Unit::TestCase
 
       test 'Options does not have key named `:local_infile`' do
         @options = {}
-        assert_false subject.instance_eval { ar_class.connection_config.has_key?(:local_infile) }
-        assert_true subject.instance_eval { load_data_infile_options.has_key?(:local_infile) }
-        assert_false subject.instance_eval { load_data_infile_options[:local_infile] }
+        assert_false subject.instance_eval { load_data_infile_options.has_key?(:local_infile) }
       end
     end
 
@@ -31,15 +29,21 @@ class LoadDataInfile2::ActiveRecordTest < Test::Unit::TestCase
 
   sub_test_case '#import' do
     setup do
-      @client = LoadDataInfile2::ActiveRecord.new(User)
+      @client = LoadDataInfile2::ActiveRecord.new(User, local_infile: true)
     end
 
     teardown do
       DbHelper.truncate('users')
     end
 
-    def import(csv)
-      @client.import(csv)
+    def import(csv, local_infile: true)
+      begin
+        old_options = User.default_load_data_infile_options
+        User.default_load_data_infile_options = { local_infile: local_infile }
+        User.load_data_infile(csv)
+      ensure
+        User.default_load_data_infile_options = old_options
+      end
     end
 
     test 'success' do
@@ -51,11 +55,26 @@ class LoadDataInfile2::ActiveRecordTest < Test::Unit::TestCase
       assert_equal 'nalabjp@gmail.com', user.email
     end
 
-    test 'failure' do
+    test 'failure local_infile: true' do
       csv = File.expand_path('../../csv/users_invalid.csv', __FILE__)
-      assert_raise_kind_of(ActiveRecord::StatementInvalid) { import(csv) }
-      assert_raise_message(/Mysql2::Error: Row 1 doesn't contain data for all columns/) { import(csv) }
-      assert_equal 0, User.count
+      import(csv)
+      user1 = User.first
+      user2 = User.second
+      assert_equal 1, user1.id
+      assert_equal 'nalabjp', user1.name
+      assert_equal '', user1.email
+      assert_equal 2, user2.id
+      assert_equal 'nalabjp2', user2.name
+      assert_equal 'nalabjp2@gmail.com', user2.email
+    end
+
+    unless ENV['TRAVIS']
+      test 'failure local_infile: false' do
+        csv = File.expand_path('../../csv/users_invalid.csv', __FILE__)
+        assert_raise_kind_of(ActiveRecord::StatementInvalid) { import(csv, local_infile: false) }
+        assert_raise_message(/Mysql2::Error: Row 1 doesn't contain data for all columns/) { import(csv, local_infile: false) }
+        assert_equal 0, User.count
+      end
     end
   end
 end
