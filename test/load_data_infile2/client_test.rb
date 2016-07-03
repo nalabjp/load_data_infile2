@@ -45,10 +45,6 @@ class LoadDataInfile2::ClientTest < Test::Unit::TestCase
   end
 
   sub_test_case '#import' do
-    setup do
-      @client = LoadDataInfile2::Client.new(@db_config)
-    end
-
     teardown do
       DbHelper.truncate('users')
     end
@@ -57,21 +53,49 @@ class LoadDataInfile2::ClientTest < Test::Unit::TestCase
       @client.import(csv, { table: 'users' })
     end
 
-    test 'success' do
-      csv = File.expand_path('../../csv/users_valid.csv', __FILE__)
-      import(csv)
-      res = @client.query('SELECT * FROM `users`;').first
-      assert_equal 1, res['id']
-      assert_equal 'nalabjp', res['name']
-      assert_equal 'nalabjp@gmail.com', res['email']
+    sub_test_case 'local_infile: true' do
+      setup do
+        @client = LoadDataInfile2::Client.new(@db_config, local_infile: true)
+      end
+
+      test 'success' do
+        csv = File.expand_path('../../csv/users_valid.csv', __FILE__)
+        import(csv)
+        res = @client.query('SELECT * FROM `users`;').first
+        assert_equal 1, res['id']
+        assert_equal 'nalabjp', res['name']
+        assert_equal 'nalabjp@gmail.com', res['email']
+      end
+
+      test 'failure' do
+        csv = File.expand_path('../../csv/users_invalid.csv', __FILE__)
+        import(csv)
+        res = @client.query('SELECT * FROM `users`;').to_a
+        assert_equal 2, res.size
+        assert_equal 1, res[0]['id']
+        assert_equal 'nalabjp', res[0]['name']
+        assert_equal '', res[0]['email']
+        assert_equal 2, res[1]['id']
+        assert_equal 'nalabjp2', res[1]['name']
+        assert_equal 'nalabjp2@gmail.com', res[1]['email']
+      end
     end
 
-    test 'failure' do
-      csv = File.expand_path('../../csv/users_invalid.csv', __FILE__)
-      assert_raise_kind_of(Mysql2::Error) { import(csv) }
-      assert_raise_message("Row 1 doesn't contain data for all columns") { import(csv) }
-      res = @client.query('SELECT * FROM `users`;')
-      assert_equal 0, res.size
+    unless ENV['TRAVIS']
+      sub_test_case 'local_infile: false' do
+        setup do
+          @db_config = DbConfig.to_hash(local_infile: false)
+          @client = LoadDataInfile2::Client.new(@db_config, local_infile: false)
+        end
+
+        test 'failure' do
+          csv = File.expand_path('../../csv/users_invalid.csv', __FILE__)
+          assert_raise_kind_of(Mysql2::Error) { import(csv) }
+          assert_raise_message("Row 1 doesn't contain data for all columns") { import(csv) }
+          res = @client.query('SELECT * FROM `users`;')
+          assert_equal 0, res.size
+        end
+      end
     end
   end
 
