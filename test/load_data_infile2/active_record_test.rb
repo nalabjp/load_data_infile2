@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class LoadDataInfile2::ActiveRecordTest < Test::Unit::TestCase
-  setup do
-    @db_config = DbConfig.to_hash
-  end
-
   sub_test_case '#initialize' do
     setup do
       subject { LoadDataInfile2::ActiveRecord.new(User, @options) }
