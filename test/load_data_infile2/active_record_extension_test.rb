@@ -6,6 +6,7 @@ class LoadDataInfile2::ActiveRecordExtensionTest < Test::Unit::TestCase
   test 'ActiveRecord::Base has extension methods' do
     assert_respond_to ActiveRecord::Base, :load_data_infile
     assert_respond_to ActiveRecord::Base, :default_load_data_infile_options
+    assert_respond_to ActiveRecord::Base, :default_load_data_infile_options=
   end
 
   test 'Should called LoadDataInfile2::ActiveRecord#import' do
