@@ -28,22 +28,13 @@ class LoadDataInfile2::ActiveRecordTest < Test::Unit::TestCase
   end
 
   sub_test_case '#import' do
-    setup do
-      @client = LoadDataInfile2::ActiveRecord.new(User, local_infile: true)
-    end
-
     teardown do
       DbHelper.truncate('users')
     end
 
     def import(csv, local_infile: true)
-      begin
-        old_options = User.default_load_data_infile_options
-        User.default_load_data_infile_options = { local_infile: local_infile }
-        User.load_data_infile(csv)
-      ensure
-        User.default_load_data_infile_options = old_options
-      end
+      client = LoadDataInfile2::ActiveRecord.new(User, local_infile: local_infile)
+      client.import(csv, table: 'users')
     end
 
     test 'success' do
