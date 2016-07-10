@@ -124,6 +124,23 @@ ldi_client.import('/path/to/users.csv', sql_opts)
 | *col_name_or_user_var* | columns: ['col1', 'col2', '@var3', ...] |
 | SET *col_name* = *expr* | set: { col1: "'specific value'", col2: '@var', col3: 'NOW()' } |
 
+### In Rails
+
+Subclass of ActiveRecord is added `.load_data_infile`.
+
+For example, in the case of User model, you can call the class method named `load_data_infile` from the User model.
+
+```ruby
+User.load_data_infile('/path/to/data.csv')
+```
+
+If you want to pass options to the initialization of `LoadDataInfile2::ActiveRecord`, you can use the accessor of class variable named `.default_load_data_infile_options`.
+
+```ruby
+User.default_load_data_infile_options = { ignore_lines: 1 }
+User.load_data_infile('/path/to/data.csv')
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/nalabjp/load_data_infile2.
