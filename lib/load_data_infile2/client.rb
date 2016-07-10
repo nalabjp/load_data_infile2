@@ -7,7 +7,7 @@ module LoadDataInfile2
 
     def initialize(config, options = {})
       if options[:local_infile]
-        config.merge!(local_infile: true)
+        config = config.merge(local_infile: true)
       end
       super(config)
 
