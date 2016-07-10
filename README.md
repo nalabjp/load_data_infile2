@@ -1,5 +1,6 @@
 # LoadDataInfile2
 
+[![Gem Version](https://badge.fury.io/rb/load_data_infile2.svg)](https://badge.fury.io/rb/load_data_infile2)
 [![Build Status](https://travis-ci.org/nalabjp/load_data_infile2.svg?branch=master)](https://travis-ci.org/nalabjp/load_data_infile2)
 [![Code Climate](https://codeclimate.com/github/nalabjp/load_data_infile2/badges/gpa.svg)](https://codeclimate.com/github/nalabjp/load_data_infile2)
 [![Test Coverage](https://codeclimate.com/github/nalabjp/load_data_infile2/badges/coverage.svg)](https://codeclimate.com/github/nalabjp/load_data_infile2/coverage)
