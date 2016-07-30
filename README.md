@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/nalabjp/load_data_infile2.svg?branch=master)](https://travis-ci.org/nalabjp/load_data_infile2)
 [![Code Climate](https://codeclimate.com/github/nalabjp/load_data_infile2/badges/gpa.svg)](https://codeclimate.com/github/nalabjp/load_data_infile2)
 [![Test Coverage](https://codeclimate.com/github/nalabjp/load_data_infile2/badges/coverage.svg)](https://codeclimate.com/github/nalabjp/load_data_infile2/coverage)
-[![Dependency Status](https://gemnasium.com/nalabjp/load_data_infile2.svg)](https://gemnasium.com/nalabjp/load_data_infile2)
+[![Dependency Status](https://gemnasium.com/badges/github.com/nalabjp/load_data_infile2.svg)](https://gemnasium.com/github.com/nalabjp/load_data_infile2)
 
 Import the data at a high speed to the table from a text file, using the [MySQL `LOAD DATA INFILE` statement](http://dev.mysql.com/doc/refman/5.7/en/load-data.html).
 
