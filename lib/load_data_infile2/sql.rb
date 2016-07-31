@@ -47,26 +47,26 @@ module LoadDataInfile2
 
     def load_data_infile
       stmt = 'LOAD DATA '
-      stmt.concat("#{options[:low_priority_or_concurrent].upcase} ") if %i(low_priority concurrent).include?(options[:low_priority_or_concurrent])
-      stmt.concat('LOCAL ') if options[:local_infile]
-      stmt.concat("INFILE '#{file}'")
+      stmt.concat("#{@options[:low_priority_or_concurrent].upcase} ") if %i(low_priority concurrent).include?(@options[:low_priority_or_concurrent])
+      stmt.concat('LOCAL ') if @options[:local_infile]
+      stmt.concat("INFILE '#{@file}'")
       stmt
     end
 
     def replace_or_ignore
-      options[:replace_or_ignore].to_s.upcase if %i(replace ignore).include?(options[:replace_or_ignore])
+      @options[:replace_or_ignore].to_s.upcase if %i(replace ignore).include?(@options[:replace_or_ignore])
     end
 
     def into_table
-      "INTO TABLE #{table}"
+      "INTO TABLE #{@table}"
     end
 
     def partition
-      "PARTITION (#{Array(options[:partition]).join(', ')})" if options[:partition] && options[:partition].size > 0
+      "PARTITION (#{Array(@options[:partition]).join(', ')})" if @options[:partition] && @options[:partition].size > 0
     end
 
     def character_set
-      "CHARACTER SET #{options[:charset]}" if options[:charset]
+      "CHARACTER SET #{@options[:charset]}" if @options[:charset]
     end
 
     def fields
@@ -83,19 +83,19 @@ module LoadDataInfile2
     end
 
     def fields_terminated_by
-      "TERMINATED BY '#{options[:fields_terminated_by]}'" if options[:fields_terminated_by]
+      "TERMINATED BY '#{@options[:fields_terminated_by]}'" if @options[:fields_terminated_by]
     end
 
     def fields_enclosed_by
-      "ENCLOSED BY '#{options[:fields_enclosed_by]}'" if options[:fields_enclosed_by]
+      "ENCLOSED BY '#{@options[:fields_enclosed_by]}'" if @options[:fields_enclosed_by]
     end
 
     def fields_optionally_enclosed_by
-      "OPTIONALLY ENCLOSED BY '#{options[:fields_optionally_enclosed_by]}'" if options[:fields_optionally_enclosed_by]
+      "OPTIONALLY ENCLOSED BY '#{@options[:fields_optionally_enclosed_by]}'" if @options[:fields_optionally_enclosed_by]
     end
 
     def fields_escaped_by
-      "ESCAPED BY '#{options[:fields_escaped_by]}'" if options[:fields_escaped_by]
+      "ESCAPED BY '#{@options[:fields_escaped_by]}'" if @options[:fields_escaped_by]
     end
 
     def lines
@@ -110,24 +110,24 @@ module LoadDataInfile2
     end
 
     def lines_starting_by
-      "STARTING BY '#{options[:lines_starting_by]}'" if options[:lines_starting_by]
+      "STARTING BY '#{@options[:lines_starting_by]}'" if @options[:lines_starting_by]
     end
 
     def lines_terminated_by
-      "TERMINATED BY '#{options[:lines_terminated_by]}'" if options[:lines_terminated_by]
+      "TERMINATED BY '#{@options[:lines_terminated_by]}'" if @options[:lines_terminated_by]
     end
 
     def ignore_lines
-      "IGNORE #{options[:ignore_lines].to_i} LINES" if options[:ignore_lines].to_i > 0
+      "IGNORE #{@options[:ignore_lines].to_i} LINES" if @options[:ignore_lines].to_i > 0
     end
 
     def columns
-      "(#{options[:columns].join(', ')})" if options[:columns] && options[:columns].size > 0
+      "(#{@options[:columns].join(', ')})" if @options[:columns] && @options[:columns].size > 0
     end
 
     def set
-      if options[:set] && options[:set].size > 0
-        s = options[:set].map {|col, val| "#{col} = #{val}" }.join(', ')
+      if @options[:set] && @options[:set].size > 0
+        s = @options[:set].map {|col, val| "#{col} = #{val}" }.join(', ')
         "SET #{s}"
       end
     end

@@ -9,12 +9,12 @@ class LoadDataInfile2::ActiveRecordTest < Test::Unit::TestCase
     sub_test_case 'local_infile' do
       test 'Options has key named `:local_infile`' do
         @options = { local_infile: true }
-        assert_true subject.instance_eval { load_data_infile_options[:local_infile] }
+        assert_true subject.instance_eval { @load_data_infile_options[:local_infile] }
       end
 
       test 'Options does not have key named `:local_infile`' do
         @options = {}
-        assert_false subject.instance_eval { load_data_infile_options.has_key?(:local_infile) }
+        assert_false subject.instance_eval { @load_data_infile_options.has_key?(:local_infile) }
       end
     end
 
@@ -22,7 +22,7 @@ class LoadDataInfile2::ActiveRecordTest < Test::Unit::TestCase
       test 'Options does not have key named `:charset`' do
         @options = {}
         assert_equal 'utf8', DbConfig[:charset]
-        assert_equal 'utf8', subject.instance_eval { load_data_infile_options[:charset] }
+        assert_equal 'utf8', subject.instance_eval { @load_data_infile_options[:charset] }
       end
     end
   end
