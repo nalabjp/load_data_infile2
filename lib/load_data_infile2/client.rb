@@ -26,7 +26,7 @@ module LoadDataInfile2
     private
 
     def build_sql(file, options = {})
-      table = options.delete(:table) || File.basename(file, '.*')
+      table = options[:table] || File.basename(file, '.*')
       LoadDataInfile2::Sql.new(file, quoted_table_name_for(table), load_data_infile_options.merge(options)).build
     end
   end
