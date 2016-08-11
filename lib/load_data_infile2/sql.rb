@@ -43,8 +43,6 @@ module LoadDataInfile2
 
     private
 
-    attr_reader :file, :table, :options
-
     def load_data_infile
       stmt = 'LOAD DATA '
       stmt.concat("#{@options[:low_priority_or_concurrent].upcase} ") if %i(low_priority concurrent).include?(@options[:low_priority_or_concurrent])
