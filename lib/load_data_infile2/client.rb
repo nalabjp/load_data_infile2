@@ -6,10 +6,12 @@ module LoadDataInfile2
     attr_reader :load_data_infile_options
 
     def initialize(config, options = {})
-      if options[:local_infile]
-        config = config.merge(local_infile: true)
-      end
-      super(config)
+      c = if options[:local_infile] && !config.has_key?(:local_infile) && !config.has_key?('local_infile')
+            config.merge(local_infile: true)
+          else
+            config
+          end
+      super(c)
 
       @load_data_infile_options = LoadDataInfile2.default_import_options.merge(options)
       @load_data_infile_options[:charset] = query_options[:charset] unless options.has_key?(:charset)
