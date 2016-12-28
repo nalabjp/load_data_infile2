@@ -7,15 +7,11 @@ rvm:
 before_install: gem install bundler
 cache:
   - bundler
-  - apt
 before_script:
   - bin/db_setup
+services:
+  - mysql
 addons:
-  apt:
-    packages:
-    - mysql-server-5.6
-    - mysql-client-core-5.6
-    - mysql-client-5.6
   code_climate:
     repo_token: a8b76c6c9740d0f664cf714144dc93d3a2c415d205a9a9f33b41d6a146ac7a26
 notifications:
