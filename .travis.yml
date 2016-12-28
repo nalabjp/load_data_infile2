@@ -9,6 +9,8 @@ cache:
   - bundler
 before_script:
   - bin/db_setup
+after_success:
+  - bundle exec codeclimate-test-reporter
 services:
   - mysql
 addons:
